@@ -1,9 +1,14 @@
+# terraform apply -var region=us-west-2
+
 provider "aws" {
-  profile    = "default"
-  region     = "us-west-2"
+  region     = var.region
 }
 
 resource "aws_instance" "example" {
-  ami           = "ami-003634241a8fcdec0"
+  ami           = var.amis[var.region]
   instance_type = "t2.micro"
+}
+
+output "ami" {
+  value = aws_instance.example.ami
 }
